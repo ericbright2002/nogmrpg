@@ -1,0 +1,925 @@
+<!DOCTYPE html>
+<html lang="en">
+    
+    <head>
+        <meta charset="utf-8">
+        
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <title>No GM RPG Play</title>
+        
+        <meta name="description" content="A website to replace your GM so you can RPG completely on your own.">
+        
+        <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+        <!-- jQuery library -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+        <!-- Latest compiled JavaScript -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        
+        <link rel="stylesheet" href="main.css">
+        
+        <script src="Junk.js"></script>
+        
+    </head>
+
+    <body>
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12">
+                    <h1>No GM RPG Play</h1>
+                    <p>This website is designed to replace your GM so that you can RPG completely on your own, play as a PC with your friends without a GM, or even plan as a dedicated GM with a minimal amount of prep.  All good things!</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- THIS IS DECISION CODE -->
+        <div class="container" style="background-image:url('two-dices-40.jpg');">
+            <h4><b>Decisions</b></h4>
+            
+            <!-- GET A YES OR NO ANSWER -->
+            <div class="row">
+                <div class="col-sm-2">
+                <!-- Selections stuff should go in here. -->
+                <form>
+                    <div class="form-group">
+                    <select class="form-control input-xs" id="yesOpt" onchange="setYesArray(this)" data-toggle="tooltip" title="Select how likely an answer of Yes is to your question." style="width:120px">
+                        <option>No Way!</option>
+                        <option>Very Unlikely</option>
+                        <option>Unlikely</option>
+                        <option>Slightly Unlikely</option>
+                        <option>Even Odds</option>
+                        <option>Slightly Likely</option>
+                        <option>Likely</option>
+                        <option>Very Likely</option>
+                        <option>For Sure!</option>
+                    </select>
+                    </div>
+                </form>
+                </div>
+                
+                <div class="col-sm-2">
+                <!-- Button stuff should go in here. -->
+                <form>
+                    <div class="form-group">
+                    <button type="button" class="btn btn-warning btn-xs" onclick="getRandArrayVal(yesArray, 'yesText')" style="width:120px">Yes or No?</button>
+                    </div>
+                </form>
+                </div>
+                    
+                <div class="col-sm-8">
+                <!-- All output from buttons should go here. -->
+                    <div class="form-group">
+                        <textarea class="form-control input-xs" rows="1" id="yesText" style="resize:none;">
+                        </textarea>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- GET A RANDOM DIE ROLL -->
+            <div class="row">
+                <div class="col-sm-2">
+                <!-- Selections stuff should go in here. -->
+                <form>
+                    <div class="form-group">
+                        <input class="form-control input-xs" type="number" min="2" max="100" value="20" id="dieOpt" data-toggle="tooltip" title="How many sides on the die?" style="width:120px"/>
+                    </div>
+                </form>
+                </div>
+                
+                <div class="col-sm-2">
+                <!-- Button stuff should go in here. -->
+                <form>
+                    <div class="form-group">
+                    <button type="button" class="btn btn-warning btn-xs" onclick="getRandVal('dieOpt', 'dieText')" style="width:120px">Roll the Die</button>
+                    </div>
+                </form>
+                </div>
+                    
+                <div class="col-sm-8">
+                <!-- All output from buttons should go here. -->
+                    <div class="form-group">
+                        <textarea class="form-control input-xs" rows="1" id="dieText" style="resize:none;">
+                        </textarea>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- DECIDE IF A RANDOM EVENT OCCURS -->
+            <div class="row">
+                <div class="col-sm-2">
+                <!-- Selections stuff should go in here. -->
+                <form>
+                    <div class="form-group">
+                        <input class="form-control input-xs" type="number" min="0" max="100" value="10" id="REOpt" data-toggle="tooltip" title="Set the percent chance of a random event occuring." style="width:120px"/>
+                    </div>
+                </form>
+                </div>
+                
+                <div class="col-sm-2">
+                <!-- Button stuff should go in here. -->
+                <form>
+                    <div class="form-group">
+                    <button type="button" class="btn btn-warning btn-xs" onclick="getRandRE('REOpt', 'REText')" style="width:120px">Rand Event?</button>
+                    </div>
+                </form>
+                </div>
+                    
+                <div class="col-sm-8">
+                <!-- All output from buttons should go here. -->
+                    <div class="form-group">
+                        <textarea class="form-control input-xs" rows="1" id="REText" style="resize:none;">
+                        </textarea>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- GET MORE DETAILS -->
+            <div class="row">
+                <div class="col-sm-2">
+                <!-- Selections stuff should go in here. -->
+                
+                </div>
+                
+                <div class="col-sm-2">
+                <!-- Button stuff should go in here. -->
+                <form>
+                    <div class="form-group">
+                    <button type="button" class="btn btn-warning btn-xs" onclick="getDetails('detailsText')" style="width:120px">More Details</button>
+                    </div>
+                </form>
+                </div>
+                    
+                <div class="col-sm-8">
+                <!-- All output from buttons should go here. -->
+                    <div class="form-group">
+                        <textarea class="form-control input-xs" rows="1" id="detailsText" style="resize:none;">
+                        </textarea>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- GET AN NPC -->
+            <div class="row">
+                <div class="col-sm-2">
+                <!-- Selections stuff should go in here. -->
+                
+                </div>
+                
+                <div class="col-sm-2">
+                <!-- Button stuff should go in here. -->
+                <form>
+                    <div class="form-group">
+                    <button type="button" class="btn btn-warning btn-xs" onclick="getNPC('NPCText')" style="width:120px">Get an NPC</button>
+                    </div>
+                </form>
+                </div>
+                    
+                <div class="col-sm-8">
+                <!-- All output from buttons should go here. -->
+                    <div class="form-group">
+                        <textarea class="form-control input-xs" rows="1" id="NPCText" style="resize:none;">
+                        </textarea>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- DECIDE A RANDOM LEVEL OF DIFFICULTY -->
+            <div class="row">
+                <div class="col-sm-2">
+                <!-- Selections stuff should go in here. -->
+                
+                </div>
+                
+                <div class="col-sm-2">
+                <!-- Button stuff should go in here. -->
+                <form>
+                    <div class="form-group">
+                    <button type="button" class="btn btn-warning btn-xs" onclick="getDifficulty('diffText')" style="width:120px">Get Difficulty</button>
+                    </div>
+                </form>
+                </div>
+                    
+                <div class="col-sm-8">
+                <!-- All output from buttons should go here. -->
+                    <div class="form-group">
+                        <textarea class="form-control input-xs" rows="1" id="diffText" style="resize:none;">
+                        </textarea>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- GET A RANDOM DIRECTION -->
+            <div class="row">
+                <div class="col-sm-2">
+                <!-- Selections stuff should go in here. -->
+                <form>
+                    <div class="form-group">
+                    <select class="form-control input-xs" id="yesOpt" onchange="setDirectionArray(this)" data-toggle="tooltip" title="Select what type of direction you would like." style="width:120px">
+                        <option>Cardinal Directions</option>
+                        <option>8 Point Compass</option>
+                        <option>Cardinal Plus Up/Down</option>
+                        <option>24 Points (Up/Down)</option>
+                    </select>
+                    </div>
+                </form>
+                </div>
+                
+                <div class="col-sm-2">
+                <!-- Button stuff should go in here. -->
+                <form>
+                    <div class="form-group">
+                    <button type="button" class="btn btn-warning btn-xs" style="width:120px" onclick="getRandDirection('directionText')">Get Direction</button>
+                    </div>
+                </form>
+                </div>
+                    
+                <div class="col-sm-8">
+                <!-- All output from buttons should go here. -->
+                    <div class="form-group">
+                        <textarea class="form-control input-xs" rows="1" id="directionText" style="resize:none;">
+                        </textarea>
+                    </div>
+                </div>
+            </div>
+
+            <!-- GET A TYPE OF LOOT OR LOSS -->
+            <div class="row">
+                <div class="col-sm-2">
+                <!-- Selections stuff should go in here. -->
+                
+                </div>
+                
+                <div class="col-sm-2">
+                <!-- Button stuff should go in here. -->
+                <form>
+                    <div class="form-group">
+                    <button type="button" class="btn btn-warning btn-xs" onclick="getRandArrayVal(lootArray, 'lootText')" data-toggle="tooltip" title="This gives you a type of loot or loss." style="width:120px">Loot/Loss</button>
+                    </div>
+                </form>
+                </div>
+                    
+                <div class="col-sm-8">
+                <!-- All output from buttons should go here. -->
+                    <div class="form-group">
+                        <textarea class="form-control input-xs" rows="1" id="lootText" style="resize:none;">
+                        </textarea>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- GET A QUEST SEED -->
+            <div class="row">
+                <div class="col-sm-2">
+                <!-- Selections stuff should go in here. -->
+                
+                </div>
+                
+                <div class="col-sm-2">
+                <!-- Button stuff should go in here. -->
+                <form>
+                    <div class="form-group">
+                    <button type="button" class="btn btn-warning btn-xs" onclick="getRandArrayVal(questArray, 'questText')" style="width:120px">Get Quest</button>
+                    </div>
+                </form>
+                </div>
+                    
+                <div class="col-sm-8">
+                <!-- All output from buttons should go here. -->
+                    <div class="form-group">
+                        <textarea class="form-control input-xs" rows="1" id="questText" style="resize:none;">
+                        </textarea>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- GET A TENSION BUILDER -->
+            <div class="row">
+                <div class="col-sm-2">
+                <!-- Selections stuff should go in here. -->
+                
+                </div>
+                
+                <div class="col-sm-2">
+                <!-- Button stuff should go in here. -->
+                <form>
+                    <div class="form-group">
+                    <button type="button" class="btn btn-warning btn-xs" onclick="getRandArrayVal(tensionArray, 'tensionText')" style="width:120px">Get Tension Builder</button>
+                    </div>
+                </form>
+                </div>
+                    
+                <div class="col-sm-8">
+                <!-- All output from buttons should go here. -->
+                    <div class="form-group">
+                        <textarea class="form-control input-xs" rows="1" id="tensionText" style="resize:none;">
+                        </textarea>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+    
+        <!-- THIS IS LOCATION CODE -->
+        <div class="container" style="background-image:url('forest-40.jpg');">
+            <h4><b>Location Information</b></h4>
+            
+            <!-- GET THE LOCATION -->
+            <div class="row">
+                <div class="col-sm-2">
+                <!-- Selections stuff should go in here. -->
+                <form>
+                    <div class="form-group">
+                    <select class="form-control input-xs" id="locOpt" onchange="setLocArray(this)" data-toggle="tooltip" title="Select what type of area you are in." style="width:120px">
+                        <option>Room in a Larger Structure</option>
+                        <option>Building a City or Open Area</option>
+                        <option>Room in a Cavern System</option>
+                        <option>Outdoor Area</option>
+                    </select>
+                    </div>
+                </form>
+                </div>
+                
+                <div class="col-sm-2">
+                <!-- Button stuff should go in here. -->
+                <form>
+                    <div class="form-group">
+                    <button type="button" class="btn btn-success btn-xs" onclick="getRandArrayVal(locArray, 'locText')" style="width:120px">Get Location</button>
+                    </div>
+                </form>
+                </div>
+                    
+                <div class="col-sm-8">
+                <!-- All output from buttons should go here. -->
+                    <div class="form-group">
+                        <textarea class="form-control input-xs" rows="2" id="locText" style="resize:none;">
+                        </textarea>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- GET THE NUMBER OF EXITS -->
+            <div class="row">
+                <div class="col-sm-2">
+                <!-- Selections stuff should go in here. -->
+                <form>
+                    <div class="form-group">
+                    <select class="form-control input-xs" id="exitOpt" onchange="setExitArray(this)" data-toggle="tooltip" title="Select how inter-connected the rooms in this place are." style="width:120px">
+                        <option>Linear</option>
+                        <option>Branching</option>
+                        <option>Sprawling</option>
+                    </select>
+                    </div>
+                </form>
+                </div>
+                
+                <div class="col-sm-2">
+                <!-- Button stuff should go in here. -->
+                <form>
+                    <div class="form-group">
+                    <button type="button" class="btn btn-success btn-xs" onclick="getRandArrayVal(exitArray, 'exitText')" style="width:120px">Additional Doors?</button>
+                    </div>
+                </form>
+                </div>
+                    
+                <div class="col-sm-8">
+                <!-- All output from buttons should go here. -->
+                    <div class="form-group">
+                        <textarea class="form-control input-xs" rows="1" id="exitText" style="resize:none;" data-toggle="tooltip" title="This tells you how many additional doors are in the room besides the way you came in.">
+                        </textarea>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- DECIDE IF THERE ARE STAIRS IN THE ROOM -->
+            <div class="row">
+                <div class="col-sm-2">
+                <!-- Selections stuff should go in here. -->
+                <form>
+                    <div class="form-group">
+                    <input class="form-control input-xs" type="number" min="0" max="100" value="15" id="stairPerc" data-toggle="tooltip" title="Set the percent chance of stairs being in the room." style="width:120px"/>
+                    </div>
+                </form>
+                </div>
+                
+                <div class="col-sm-2">
+                <!-- Button stuff should go in here. -->
+                <form>
+                    <div class="form-group">
+                    <button type="button" class="btn btn-success btn-xs" onclick="areStairs('stairPerc', 'stairText')" style="width:120px">Stairs in Room?</button>
+                    </div>
+                </form>
+                </div>
+                    
+                <div class="col-sm-8">
+                <!-- All output from buttons should go here. -->
+                    <div class="form-group">
+                        <textarea class="form-control input-xs" rows="1" id="stairText" style="resize:none;">
+                        </textarea>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- DECIDE IF THERE ARE LOCKED DOORS -->
+            <div class="row">
+                <div class="col-sm-2">
+                <!-- Selections stuff should go in here. -->
+                <form>
+                    <div class="form-group">
+                    <input class="form-control input-xs" type="number" min="0" max="100" value="25" id="lockedPerc" data-toggle="tooltip" title="Set the percent chance of stairs being in the room." style="width:120px"/>
+                    </div>
+                </form>
+                </div>
+                
+                <div class="col-sm-2">
+                <!-- Button stuff should go in here. -->
+                <form>
+                    <div class="form-group">
+                    <button type="button" class="btn btn-success btn-xs" onclick="isLocked('lockedPerc', 'lockedText')" style="width:120px">Door Locked?</button>
+                    </div>
+                </form>
+                </div>
+                    
+                <div class="col-sm-8">
+                <!-- All output from buttons should go here. -->
+                    <div class="form-group">
+                        <textarea class="form-control input-xs" rows="1" id="lockedText" style="resize:none;">
+                        </textarea>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- GET DIFFICULTY TO UNLOCK DOORS -->
+            <div class="row">
+                <div class="col-sm-2">
+                <!-- Selections stuff should go in here. -->
+                
+                </div>
+                
+                <div class="col-sm-2">
+                <!-- Button stuff should go in here. -->
+                <form>
+                    <div class="form-group">
+                    <button type="button" class="btn btn-success btn-xs" onclick="getRandArrayVal(difficultyArray, 'unlockText')" style="width:120px">To Unlock Door?</button>
+                    </div>
+                </form>
+                </div>
+                    
+                <div class="col-sm-8">
+                <!-- All output from buttons should go here. -->
+                    <div class="form-group">
+                        <textarea class="form-control input-xs" rows="1" id="unlockText" style="resize:none;">
+                        </textarea>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- DECIDE IF THERE ARE SECRET DOORS -->
+            <div class="row">
+                <div class="col-sm-2">
+                <!-- Selections stuff should go in here. -->
+                <form>
+                    <div class="form-group">
+                    <input class="form-control input-xs" type="number" min="0" max="100" value="10" id="secretPerc" data-toggle="tooltip" title="Set the percent chance of stairs being in the room." style="width:120px"/>
+                    </div>
+                </form>
+                </div>
+                
+                <div class="col-sm-2">
+                <!-- Button stuff should go in here. -->
+                <form>
+                    <div class="form-group">
+                    <button type="button" class="btn btn-success btn-xs" onclick="isLocked('secretPerc', 'secretText')" style="width:120px">Secret Door?</button>
+                    </div>
+                </form>
+                </div>
+                    
+                <div class="col-sm-8">
+                <!-- All output from buttons should go here. -->
+                    <div class="form-group">
+                        <textarea class="form-control input-xs" rows="1" id="secretText" style="resize:none;">
+                        </textarea>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- GET DIFFICULTY TO FIND SECRET DOORS -->
+            <div class="row">
+                <div class="col-sm-2">
+                <!-- Selections stuff should go in here. -->
+                
+                </div>
+                
+                <div class="col-sm-2">
+                <!-- Button stuff should go in here. -->
+                <form>
+                    <div class="form-group">
+                    <button type="button" class="btn btn-success btn-xs" onclick="getRandArrayVal(difficultyArray, 'findSecretText')" style="width:120px">To Find Secret?</button>
+                    </div>
+                </form>
+                </div>
+                    
+                <div class="col-sm-8">
+                <!-- All output from buttons should go here. -->
+                    <div class="form-group">
+                        <textarea class="form-control input-xs" rows="1" id="findSecretText" style="resize:none;">
+                        </textarea>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- GET DIFFICULTY TO UNLOCK SECRET DOORS -->
+            <div class="row">
+                <div class="col-sm-2">
+                <!-- Selections stuff should go in here. -->
+                
+                </div>
+                
+                <div class="col-sm-2">
+                <!-- Button stuff should go in here. -->
+                <form>
+                    <div class="form-group">
+                    <button type="button" class="btn btn-success btn-xs" onclick="getRandArrayVal(difficultyArray, 'unlockSecretText')" style="width:120px">To Unlock Secret?</button>
+                    </div>
+                </form>
+                </div>
+                    
+                <div class="col-sm-8">
+                <!-- All output from buttons should go here. -->
+                    <div class="form-group">
+                        <textarea class="form-control input-xs" rows="1" id="unlockSecretText" style="resize:none;">
+                        </textarea>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- GET WHAT IS INSIDE SECRET DOORS -->
+            <div class="row">
+                <div class="col-sm-2">
+                <!-- Selections stuff should go in here. -->
+                
+                </div>
+                
+                <div class="col-sm-2">
+                <!-- Button stuff should go in here. -->
+                <form>
+                    <div class="form-group">
+                    <button type="button" class="btn btn-success btn-xs" onclick="getRandArrayVal(insideSecretArray, 'insideSecretText')" style="width:120px">Inside Secret Door?</button>
+                    </div>
+                </form>
+                </div>
+                    
+                <div class="col-sm-8">
+                <!-- All output from buttons should go here. -->
+                    <div class="form-group">
+                        <textarea class="form-control input-xs" rows="1" id="insideSecretText" style="resize:none;">
+                        </textarea>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+        
+        <!-- THIS IS COMBAT CODE -->
+        <div class="container" style="background-image:url('gladiator-40.jpg');">
+            <h4><b>Combat Information</b></h4>
+            
+            <!-- GET THE COMBATANT -->
+            <div class="row">
+                <div class="col-sm-2">
+                <!-- Selections stuff should go in here. -->
+                
+                </div>
+                
+                <div class="col-sm-2">
+                <!-- Button stuff should go in here. -->
+                <form>
+                    <div class="form-group">
+                    <button type="button" class="btn btn-danger btn-xs" onclick="getCombatant('combatText', 'combatDescText')" style="width:120px">Get Attacker</button>
+                    </div>
+                </form>
+                </div>
+                    
+                <div class="col-sm-8">
+                <!-- All output from buttons should go here. -->
+                    <div class="form-group">
+                        <textarea class="form-control input-xs" rows="1" id="combatText" style="resize:none;">
+                        </textarea>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row">
+                <div class="col-sm-2">
+                <!-- Selections stuff should go in here. -->
+                
+                </div>
+                
+                <div class="col-sm-2">
+                <!-- Button stuff should go in here. -->
+                <p><b><i>Description:</i></b></p>
+                </div>
+                    
+                <div class="col-sm-8">
+                <!-- All output from buttons should go here. -->
+                    <div class="form-group">
+                        <textarea class="form-control input-xs" rows="3" id="combatDescText" style="resize:none;">
+                        </textarea>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- GET SPECIAL ATTACK -->
+            <div class="row">
+                <div class="col-sm-2">
+                <!-- Selections stuff should go in here. -->
+                
+                </div>
+                
+                <div class="col-sm-2">
+                <!-- Button stuff should go in here. -->
+                <form>
+                    <div class="form-group">
+                    <button type="button" class="btn btn-danger btn-xs" onclick="getRandArrayVal(specialArray, 'specialText')" style="width:120px">Get Special Attack</button>
+                    </div>
+                </form>
+                </div>
+                    
+                <div class="col-sm-8">
+                <!-- All output from buttons should go here. -->
+                    <div class="form-group">
+                        <textarea class="form-control input-xs" rows="3" id="specialText" style="resize:none;">
+                        </textarea>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- GET COMBATANT TYPE -->
+            <div class="row">
+                <div class="col-sm-2">
+                <!-- Selections stuff should go in here. -->
+                
+                </div>
+                
+                <div class="col-sm-2">
+                <!-- Button stuff should go in here. -->
+                <form>
+                    <div class="form-group">
+                    <button type="button" class="btn btn-danger btn-xs" onclick="getRandArrayVal(combatTypeArray, 'combatTypeText')" style="width:120px">What Type?</button>
+                    </div>
+                </form>
+                </div>
+                    
+                <div class="col-sm-8">
+                <!-- All output from buttons should go here. -->
+                    <div class="form-group">
+                        <textarea class="form-control input-xs" rows="1" id="combatTypeText" style="resize:none;">
+                        </textarea>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- GET COMBATANT AMOUNT -->
+            <div class="row">
+                <div class="col-sm-2">
+                <!-- Selections stuff should go in here. -->
+                
+                </div>
+                
+                <div class="col-sm-2">
+                <!-- Button stuff should go in here. -->
+                <form>
+                    <div class="form-group">
+                    <button type="button" class="btn btn-danger btn-xs" onclick="getRandArrayVal(combatAmountArray, 'combatAmountText')" style="width:120px">How Many?</button>
+                    </div>
+                </form>
+                </div>
+                    
+                <div class="col-sm-8">
+                <!-- All output from buttons should go here. -->
+                    <div class="form-group">
+                        <textarea class="form-control input-xs" rows="1" id="combatAmountText" style="resize:none;">
+                        </textarea>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- GET COMBATANT INTENT -->
+            <div class="row">
+                <div class="col-sm-2">
+                <!-- Selections stuff should go in here. -->
+                
+                </div>
+                
+                <div class="col-sm-2">
+                <!-- Button stuff should go in here. -->
+                <form>
+                    <div class="form-group">
+                    <button type="button" class="btn btn-danger btn-xs" onclick="getRandArrayVal(intentArray, 'intentText')" style="width:120px">Intentions?</button>
+                    </div>
+                </form>
+                </div>
+                    
+                <div class="col-sm-8">
+                <!-- All output from buttons should go here. -->
+                    <div class="form-group">
+                        <textarea class="form-control input-xs" rows="1" id="intentText" style="resize:none;">
+                        </textarea>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- GET COMBATANT STRATEGY -->
+            <div class="row">
+                <div class="col-sm-2">
+                <!-- Selections stuff should go in here. -->
+                
+                </div>
+                
+                <div class="col-sm-2">
+                <!-- Button stuff should go in here. -->
+                <form>
+                    <div class="form-group">
+                    <button type="button" class="btn btn-danger btn-xs" onclick="getRandArrayVal(strategyArray, 'strategyText')" style="width:120px">Attack Strategy?</button>
+                    </div>
+                </form>
+                </div>
+                    
+                <div class="col-sm-8">
+                <!-- All output from buttons should go here. -->
+                    <div class="form-group">
+                        <textarea class="form-control input-xs" rows="1" id="strategyText" style="resize:none;">
+                        </textarea>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+        
+        <!-- THIS IS TRAP CODE -->
+        <div class="container" style="background-image:url('cobweb-60.jpg');">
+            <h4><b>Trap Information</b></h4>
+            
+            <!-- GET THE TRAP -->
+            <div class="row">
+                <div class="col-sm-2">
+                <!-- Selections stuff should go in here. -->
+                
+                </div>
+                
+                <div class="col-sm-2">
+                <!-- Button stuff should go in here. -->
+                <form>
+                    <div class="form-group">
+                    <button type="button" class="btn btn-primary btn-xs" onclick="getTrap('trapText', 'trapDescText')" style="width:120px">Get Trap</button>
+                    </div>
+                </form>
+                </div>
+                    
+                <div class="col-sm-8">
+                <!-- All output from buttons should go here. -->
+                    <div class="form-group">
+                        <textarea class="form-control input-xs" rows="1" id="trapText" style="resize:none;">
+                        </textarea>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row">
+                <div class="col-sm-2">
+                <!-- Selections stuff should go in here. -->
+                
+                </div>
+                
+                <div class="col-sm-2">
+                <!-- Button stuff should go in here. -->
+                <p><b><i>Description:</i></b></p>
+                </div>
+                    
+                <div class="col-sm-8">
+                <!-- All output from buttons should go here. -->
+                    <div class="form-group">
+                        <textarea class="form-control input-xs" rows="4" id="trapDescText" style="resize:none;">
+                        </textarea>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- GET TRAP DIFFICULTY TO DISCOVER -->
+            <div class="row">
+                <div class="col-sm-2">
+                <!-- Selections stuff should go in here. -->
+                
+                </div>
+                
+                <div class="col-sm-2">
+                <!-- Button stuff should go in here. -->
+                <form>
+                    <div class="form-group">
+                    <button type="button" class="btn btn-primary btn-xs" onclick="getRandArrayVal(difficultyArray, 'trapDiscoverText')" style="width:120px">To Discover?</button>
+                    </div>
+                </form>
+                </div>
+                    
+                <div class="col-sm-8">
+                <!-- All output from buttons should go here. -->
+                    <div class="form-group">
+                        <textarea class="form-control input-xs" rows="1" id="trapDiscoverText" style="resize:none;">
+                        </textarea>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- GET TRAP DIFFICULTY TO DISARM -->
+            <div class="row">
+                <div class="col-sm-2">
+                <!-- Selections stuff should go in here. -->
+                
+                </div>
+                
+                <div class="col-sm-2">
+                <!-- Button stuff should go in here. -->
+                <form>
+                    <div class="form-group">
+                    <button type="button" class="btn btn-primary btn-xs" onclick="getRandArrayVal(difficultyArray, 'trapDisarmText')" style="width:120px">To Disarm?</button>
+                    </div>
+                </form>
+                </div>
+                    
+                <div class="col-sm-8">
+                <!-- All output from buttons should go here. -->
+                    <div class="form-group">
+                        <textarea class="form-control input-xs" rows="1" id="trapDisarmText" style="resize:none;">
+                        </textarea>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- GET TRAP DIFFICULTY TO AVOID -->
+            <div class="row">
+                <div class="col-sm-2">
+                <!-- Selections stuff should go in here. -->
+                
+                </div>
+                
+                <div class="col-sm-2">
+                <!-- Button stuff should go in here. -->
+                <form>
+                    <div class="form-group">
+                    <button type="button" class="btn btn-primary btn-xs" onclick="getRandArrayVal(difficultyArray, 'trapAvoidText')" style="width:120px">To Avoid?</button>
+                    </div>
+                </form>
+                </div>
+                    
+                <div class="col-sm-8">
+                <!-- All output from buttons should go here. -->
+                    <div class="form-group">
+                        <textarea class="form-control input-xs" rows="1" id="trapAvoidText" style="resize:none;">
+                        </textarea>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- GET TRAP DAMAGE -->
+            <div class="row">
+                <div class="col-sm-2">
+                <!-- Selections stuff should go in here. -->
+                
+                </div>
+                
+                <div class="col-sm-2">
+                <!-- Button stuff should go in here. -->
+                <form>
+                    <div class="form-group">
+                    <button type="button" class="btn btn-primary btn-xs" onclick="getRandArrayVal(difficultyArray, 'trapDamageText')" style="width:120px">Trap Damage</button>
+                    </div>
+                </form>
+                </div>
+                    
+                <div class="col-sm-8">
+                <!-- All output from buttons should go here. -->
+                    <div class="form-group">
+                        <textarea class="form-control input-xs" rows="1" id="trapDamageText" style="resize:none;">
+                        </textarea>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+        
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12">
+                    <p>Thank you for using this website!  I hope it has been useful!</p>
+                    
+                    <p><font size=-2>(c) 2017 Eric Bright</font></p>
+                </div>
+            </div>
+        </div>
+        
+    </body>
+    </html>
