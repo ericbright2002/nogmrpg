@@ -1,0 +1,94 @@
+/*.locbutton {
+    background: green;
+    background: -webkit-linear-gradient(left top, #31BB19, #1F830D);
+    background: -o-linear-gradient(bottom right, #31BB19, #1F830D);
+    background: -moz-linear-gradient(bottom right, #31BB19, #1F830D);
+    background: linear-gradient(to bottom right, #31BB19, #1F830D);
+    border: black;
+    color: black;
+    text-align: center;
+    font-size: 14px;
+    border-radius: 8px;
+    font-weight: bold;
+    font-family: monospace;
+}*/
+
+.locbutton {
+    padding: 4px 4px;
+    color: #ffffff;
+    background-color: #5cb85c;
+    border-radius: 2px;
+    border: 2px solid #000000;
+    box-shadow: 0 5px #999999;
+    text-align: center;
+    font-size: 12px;
+    width: 100px;
+}
+
+.locbutton:active {
+    box-shadow: 0 5px #666;
+  transform: translateY(4px);
+}
+
+.input-xs {
+  height: 22px;
+  padding: 2px 5px;
+  font-size: 12px;
+  line-height: 1.5; /* If Placeholder of the input is moved up, rem/modify this. */
+  border-radius: 3px;
+}
+
+.borderedgray {
+	margin-top:2px;
+    margin-bottom:2px;
+    margin-left:2px;
+    margin-right:2px;
+	border: #cdcdcd medium solid;
+	border-radius: 2px;
+	-moz-border-radius: 2px;
+	-webkit-border-radius: 2px;
+}
+
+.borderedblack {
+	margin-top:2px;
+    margin-bottom:2px;
+    margin-left:2px;
+    margin-right:2px;
+	border: black medium solid;
+	border-radius: 2px;
+	-moz-border-radius: 2px;
+	-webkit-border-radius: 2px;
+}
+
+.outputarea {
+  height: 300px;
+  border: 1px solid #ccc;
+}
+
+#mainText {
+    overflow:scroll;
+}
+
+.boldText {
+    font-weight: bold;
+}
+
+.adventureText {
+    color: #a90ad9;
+}
+
+.decisionText {
+    color: #bc9100;
+}
+
+.locationText {
+    color: #039803;
+}
+
+.combatText {
+    color: #ff0000;
+}
+
+.trapText {
+    color: blue;
+}

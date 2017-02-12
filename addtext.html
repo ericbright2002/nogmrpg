@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="en">
+    
+    <head>
+        <meta charset="utf-8">
+        
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <title>No GM RPG Play</title>
+        
+        <meta name="description" content="A website to replace your GM so you can RPG completely on your own.">
+        
+        <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+        <!-- jQuery library -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+        <!-- Latest compiled JavaScript -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        
+        <link rel="stylesheet" href="nogmcss.css">
+        
+        <script src="nogmjs2.js"></script>
+        
+    </head>
+
+    <body onload="shuffleBothCardArrays()">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12">
+                    <img src="images/NoGMLogo5.png" style="float:left;"/><h1>No GM RPG Play</h1>
+                    <p>This website is designed to replace your GM so that you can RPG completely on your own, play as a PC with your friends without a GM, or even plan as a dedicated GM with a minimal amount of prep.</p>
+                    <p>Type in the textbox below the box that says, "Your Story."  Then click the "Add to Story" button to make that part of your story that can be saved as a cookie on this website.  The "Remove Last" button will remove the last paragraph from Your Story.</p>
+                    
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12">
+                <p style="font-size:8px;"><a href="http://www.freepik.com/free-vector/dragon-logo-template-vector_753331.htm">Logo Designed by Freepik</a></p>
+                </div>
+            </div>
+        </div>
+        
+        
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-2">
+                    <button class="button btn-xs" onclick="createCookie()">Save Story with Cookies</button>
+                    <button class="button btn-xs" onclick="loadStory()">Load Story from Cookies</button>
+                    
+                    <br/><p><font size=-1>You story is saved as a cookie for 90 days.</font></p>
+                </div>
+                
+                <div class="col-sm-10">
+                    <div class="outputarea" id="mainText" style="font-size:12px;">
+                        <h3>YOUR STORY:</h3>
+                    </div>                    
+                </div>
+            </div>
+        </div>
+        
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-2">
+                    <button class="button btn-xs" onclick="addText()">Add to Story</button>
+                    <button class="button btn-xs" onclick="removeText()">Remove Last</button>
+                </div>
+                
+                <div class="col-sm-10">
+                    <div class="form-group">
+                        <textarea class="form-control input-xs" rows="5" id="addText" style="resize:none;"></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- ADVENTURE BUILDING CODE BEGINS -->
+        <!-- Start with a collapsable header for the section -->
+        <div class="container">
+            <div class="row" style="background-color:#c83df2;">
+                <h4><span class="glyphicon glyphicon-collapse-up" id="adventureIcon" onclick="collapseSection('adventureSection', 'adventureIcon')"></span><b>Adventure Building</b> </h4>
+            </div>
+        </div>
+        
+        <div class="container" style="background-image:url('images/adventure-60.jpg');" id="adventureSection">
+        
+            <div class="row"><p></p></div>
+            <div class="row">
+                <div class="col-sm-2">
+                    <!-- Set the array to use for generating adventures -->
+                    <form>
+                    <div class="form-group">
+                    <select class="form-control input-xs" id="advOpt" onchange="setAdvArray(this)" data-toggle="tooltip" title="Select how detailed of an adventure you would like to produce." style="width:100px">
+                        <option>Simple Quest Seed</option>
+                        <option>Full Adventure</option>
+                    </select>
+                    </div>
+                    </form>
+                </div>
+                
+                <div class="col-sm-2">
+                <!-- Button to get an adventure up into the story box. -->
+                <form>
+                    <div class="form-group">
+                    <button type="button" class="btn btn-warning btn-xs" onclick="postRandAdv()" style="width:100px;background-color:purple;border-color:#400740;">Get Adventure</button>
+                    </div>
+                </form>
+                </div>
+                
+                <div class="col-sm-2">
+                <!-- Button to get more details about the adventure up into the story box. -->
+                <form>
+                    <div class="form-group">
+                    <button type="button" class="btn btn-warning btn-xs" onclick="getComplication()" style="width:100px;background-color:purple;border-color:#400740;display:none;" id="complicationButton">Complication</button>
+                    </div>
+                </form>
+                </div>
+                
+                <div class="col-sm-2">
+                <!-- Button to get a tension builder up into the story box. -->
+                <form>
+                    <div class="form-group">
+                    <button type="button" class="btn btn-warning btn-xs" onclick="postRandArrayVal('Tension Builder: ', ' adventureText', tensionArray)" style="width:100px;background-color:purple;border-color:#400740;">Tension Builder</button>
+                    </div>
+                </form>
+                </div>
+                
+                <div class="col-sm-2">
+                <!-- Button to get the next encounter for the adventure up into the story box. -->
+                <form>
+                    <div class="form-group">
+                    <button type="button" class="btn btn-warning btn-xs" onclick="getEncounter()" style="width:100px;background-color:purple;border-color:#400740;display:none;" id="encounterButton">Next Encounter</button>
+                    </div>
+                </form>
+                </div>
+                
+                <div class="col-sm-2">
+                <!-- Button to get the climax of the adventure up into the story box. -->
+                <form>
+                    <div class="form-group">
+                    <button type="button" class="btn btn-warning btn-xs" onclick="getClimax()" style="width:100px;background-color:purple;border-color:#400740;display:none;" id="climaxButton">Get Climax</button>
+                    </div>
+                </form>
+                </div>
+                
+            </div>
+            
+        </div>
+        
+        <!-- THIS IS DECISION CODE -->
+        <div class="container">
+            <div class="row" style="background-color:#d4a141;">
+                <h4><span class="glyphicon glyphicon-collapse-up" id="decisionIcon" onclick="collapseSection('decisionSection', 'decisionIcon')"></span><b>Decisions</b> </h4>
+            </div>
+        </div>    
+        
+        <div class="container" style="background-image:url('images/two-dices-40.jpg');" id="decisionSection">    
+            <div class="row"><p></p></div>
+            
+            <div class="row">
+                <div class="col-sm-2">
+                <!-- GET A YES OR NO ANSWER -->
+                <!-- Selections stuff should go in here. -->
+                <form>
+                    <div class="form-group">
+                    <select class="form-control input-xs" id="yesOpt" onchange="setYesArray(this)" data-toggle="tooltip" title="Select how likely an answer of Yes is to your question." style="width:100px">
+                        <option>No Way!</option>
+                        <option>Very Unlikely</option>
+                        <option>Unlikely</option>
+                        <option>Slightly Unlikely</option>
+                        <option>Even Odds</option>
+                        <option>Slightly Likely</option>
+                        <option>Likely</option>
+                        <option>Very Likely</option>
+                        <option>For Sure!</option>
+                    </select>
+                    </div>
+                </form>
+                <!-- Button stuff should go in here. -->
+                <form>
+                    <div class="form-group">
+                    <button type="button" class="btn btn-warning btn-xs" onclick="postRandArrayVal('Answer to Yes/No Question: ', ' decisionText', yesArray)" style="width:100px">Yes or No?</button>
+                    </div>
+                </form>
+                </div>
+                
+                <div class="col-sm-2">
+                <!-- GET RANDOM DIE ROLL -->
+                <!-- Selections stuff should go in here. -->
+                <form>
+                    <div class="form-group">
+                        <label for="dieNumber">#:</label>
+                        <input class="form-control input-xs" type="number" min="1" max="100" value="1" id="dieNumber" data-toggle="tooltip" title="How many dice will you roll?" style="width:50px;display:inline;"/>
+                        <br/><label for="dieOpt">d:</label>
+                        <input class="form-control input-xs" type="number" min="2" max="100" value="20" id="dieOpt" data-toggle="tooltip" title="How many sides on the die?" style="width:50px;display:inline;"/>
+                        <br/><label for="dieAdd">+:</label>
+                        <input class="form-control input-xs" type="number" min="0" max="100" value="0" id="dieAdd" data-toggle="tooltip" title="How much to add to the die rolls?" style="width:50px;display:inline;"/>
+                    </div>
+                </form>
+                <!-- Button stuff should go in here. -->
+                <form>
+                    <div class="form-group">
+                    <button type="button" class="btn btn-warning btn-xs" onclick="getRandVal('-Sided Dice: ', 'dieNumber', 'dieOpt', 'dieAdd')" style="width:100px">Roll the Die</button>
+                    </div>
+                </form>
+                </div>
+                
+                <div class="col-sm-2">
+                <!-- GET RANDOM EVENT -->
+                <!-- Selections stuff should go in here. -->
+                <form>
+                    <div class="form-group">
+                        <input class="form-control input-xs" type="number" min="0" max="100" value="10" id="REOpt" data-toggle="tooltip" title="Set the percent chance of a random event occuring." style="width:100px"/>
+                    </div>
+                </form>
+                <!-- Button stuff should go in here. -->
+                <form>
+                    <div class="form-group">
+                    <button type="button" class="btn btn-warning btn-xs" onclick="getRandRE('REOpt')" style="width:100px">Rand Event?</button>
+                    </div>
+                </form>
+                </div>
+                
+                <div class="col-sm-2">
+                <!-- GET A RANDOM NUMBER OF CARDS FROM A DECK -->
+                <!-- Selections stuff should go in here. -->
+                <form>
+                    <div class="form-group">
+                        <input class="form-control input-xs" type="number" min="1" max="52" value="1" id="cardOpt" data-toggle="tooltip" title="How many cards to draw?" style="width:100px"/>
+                    </div>
+                </form>
+                <!-- Button stuff should go in here. -->
+                <form>
+                    <div class="form-group">
+                        <button type="button" class="btn btn-warning btn-xs" onclick="shuffleBothCardArrays()" style="width:100px;">Shuffle Deck</button>
+                        <br/><button type="button" class="btn btn-warning btn-xs" onclick="getRandCards('cardOpt');" style="width:100px;">Draw Card(s)</button>
+                    </div>
+                </form>
+                </div>
+                
+                <div class="col-sm-2">
+                <!-- GET RANDOM DIRECTION. -->
+                <!-- Selections stuff should go in here. -->
+                <form>
+                    <div class="form-group">
+                    <select class="form-control input-xs" id="yesOpt" onchange="setDirectionArray(this)" data-toggle="tooltip" title="Select what type of direction you would like." style="width:100px">
+                        <option>Cardinal Directions</option>
+                        <option>8 Point Compass</option>
+                        <option>Cardinal Plus Up/Down</option>
+                        <option>24 Points (Up/Down)</option>
+                    </select>
+                    </div>
+                </form>
+                
+                <!-- Button stuff should go in here. -->
+                <form>
+                    <div class="form-group">
+                    <button type="button" class="btn btn-warning btn-xs" style="width:100px" onclick="postRandArrayVal('Direction: ', ' decisionText', dirArray)">Get Direction</button>
+                    </div>
+                </form>
+                </div>
+                
+                <div class="col-sm-2"></div>
+            </div>
+            
+            
+            
+            
+            <div class="row">
+                <div class="col-sm-2">
+                <!-- GET MORE DETAILS -->
+                <!-- Button stuff should go in here. -->
+                <form>
+                    <div class="form-group">
+                    <button type="button" class="btn btn-warning btn-xs" onclick="getDetails(' decisionText')" style="width:100px">More Details</button>
+                    </div>
+                </form>
+                </div>
+
+                <div class="col-sm-2">
+                <!-- GET AN NPC -->
+                <!-- Button stuff should go in here. -->
+                <form>
+                    <div class="form-group">
+                    <button type="button" class="btn btn-warning btn-xs" onclick="getNPC()" style="width:100px">Get an NPC</button>
+                    </div>
+                </form>
+                </div>
+                    
+                <div class="col-sm-2">
+                <!-- Decide Random Level of Difficulty -->
+                <!-- Button stuff should go in here. -->
+                <form>
+                    <div class="form-group">
+                    <button type="button" class="btn btn-warning btn-xs" onclick="postRandArrayVal('Difficulty: ', ' decisionText', difficultyArray)" style="width:100px">Get Difficulty</button>
+                    </div>
+                </form>
+                </div>
+                    
+                <div class="col-sm-2">
+                <!-- Get a Type of Loot or Loss -->
+                <!-- Button stuff should go in here. -->
+                <form>
+                    <div class="form-group">
+                    <button type="button" class="btn btn-warning btn-xs" onclick="postRandArrayVal('Loot or Loss: ', ' decisionText', lootArray)" data-toggle="tooltip" title="This gives you a type of loot or loss." style="width:100px">Loot/Loss</button>
+                    </div>
+                </form>
+                </div>
+                <div class="col-sm-4"></div>
+            </div>
+        </div>
+    
+        <!-- THIS IS LOCATION CODE -->
+        <div class="container">
+            <div class="row" style="background-color:#2b912b;">
+                <h4><span class="glyphicon glyphicon-collapse-up" id="locationIcon" onclick="collapseSection('locationSection', 'locationIcon')"></span><b>Locations</b> </h4>
+            </div>
+        </div>
+        
+        <div class="container" style="background-image:url('images/forest-40.jpg');" id="locationSection">
+            
+            <div class="row"><p></p></div>
+            
+            <div class="row">
+                <div class="col-sm-2">
+                <!-- GET THE LOCATION -->
+                <!-- Selections stuff should go in here. -->
+                <form>
+                    <div class="form-group">
+                    <select class="form-control input-xs" id="locOpt" onchange="setLocArray(this)" data-toggle="tooltip" title="Select what type of area you are in." style="width:100px">
+                        <option>Room in a Larger Structure</option>
+                        <option>Building a City or Open Area</option>
+                        <option>Room in a Cavern System</option>
+                        <option>Outdoor Area</option>
+                    </select>
+                    </div>
+                </form>
+                
+                <!-- Button stuff should go in here. -->
+                <form>
+                    <div class="form-group">
+                    <button type="button" class="btn btn-success btn-xs" onclick="postRandArrayVal('Location: ', ' locationText', locArray)" style="width:100px">Get Location</button>
+                    </div>
+                </form>
+                </div>
+                    
+                <div class="col-sm-2">
+                <!-- GET THE NUMBER OF EXITS -->
+                <!-- Selections stuff should go in here. -->
+                <form>
+                    <div class="form-group">
+                    <select class="form-control input-xs" id="exitOpt" onchange="setExitArray(this)" data-toggle="tooltip" title="Select how inter-connected the rooms in this place are." style="width:100px">
+                        <option>Linear</option>
+                        <option>Branching</option>
+                        <option>Sprawling</option>
+                    </select>
+                    </div>
+                </form>
+                
+                <!-- Button stuff should go in here. -->
+                <form>
+                    <div class="form-group">
+                    <button type="button" class="btn btn-success btn-xs" onclick="postRandArrayVal('Number of Additional Exits: ', ' locationText', exitArray)" style="width:100px">Other Doors?</button>
+                    </div>
+                </form>
+                </div>
+                    
+                <div class="col-sm-2">
+                <!-- DECIDE IF THERE ARE STAIRS -->
+                <!-- Selections stuff should go in here. -->
+                <form>
+                    <div class="form-group">
+                    <input class="form-control input-xs" type="number" min="0" max="100" value="15" id="stairPerc" data-toggle="tooltip" title="Set the percent chance of stairs being in the room." style="width:100px"/>
+                    </div>
+                </form>
+                
+                <!-- Button stuff should go in here. -->
+                <form>
+                    <div class="form-group">
+                    <button type="button" class="btn btn-success btn-xs" onclick="areStairs('stairPerc')" style="width:100px">Stairs in Room?</button>
+                    </div>
+                </form>
+                </div>
+                    
+                <div class="col-sm-2">
+                <!-- DECIDE IF THERE ARE LOCKED DOORS -->
+                <!-- Selections stuff should go in here. -->
+                <form>
+                    <div class="form-group">
+                    <input class="form-control input-xs" type="number" min="0" max="100" value="25" id="lockedPerc" data-toggle="tooltip" title="Set the percent chance of there being a locked door in the room." style="width:100px"/>
+                    </div>
+                </form>
+
+                <!-- Button stuff should go in here. -->
+                <form>
+                    <div class="form-group">
+                    <button type="button" class="btn btn-success btn-xs" onclick="isLocked('lockedPerc')" style="width:100px">Door Locked?</button>
+                    </div>
+                </form>
+                </div>
+                
+                <div class="col-sm-2">
+                <!-- DECIDE IF THERE ARE SECRET DOORS -->
+                <!-- Button stuff should go in here. -->
+                <form>
+                    <div class="form-group">
+                    <input class="form-control input-xs" type="number" min="0" max="100" value="10" id="secretPerc" data-toggle="tooltip" title="Set the percent chance of there being a secret door in the room." style="width:100px"/>
+                    </div>
+                </form>
+                    
+                <form>
+                    <div class="form-group">
+                    <button type="button" class="btn btn-success btn-xs" onclick="isSecret('secretPerc')" style="width:100px">Secret Door?</button>
+                    </div>
+                </form>
+                </div>
+                
+                <div class="col-sm-2">
+                <!-- DECIDE IF THERE IS A TRAP -->
+                <!-- Button stuff should go in here. -->
+                <form>
+                    <div class="form-group">
+                    <input class="form-control input-xs" type="number" min="0" max="100" value="10" id="trapPerc" data-toggle="tooltip" title="Set the percent chance of there being a trap in the room.  Alternately, use the Yes/No question in the Decision section." style="width:100px"/>
+                    </div>
+                </form>
+                    
+                <form>
+                    <div class="form-group">
+                    <button type="button" class="btn btn-success btn-xs" onclick="isTrap('trapPerc')" style="width:100px">Is Trap?</button>
+                    </div>
+                </form>
+                </div>
+            </div>
+        </div>
+        
+        <!-- THIS IS COMBAT CODE -->
+        <div class="container">
+            <div class="row" style="background-color:#e22424;">
+                <h4><span class="glyphicon glyphicon-collapse-up" id="combatIcon" onclick="collapseSection('combatSection', 'combatIcon')"></span><b>Combat</b> </h4>
+            </div>
+        </div>
+        
+        <div class="container" style="background-image:url('images/gladiator-40.jpg');" id="combatSection">
+            <div class="row"><p></p></div>
+            
+            <div class="row">
+                <div class="col-sm-2">
+                <!-- GET THE COMBATANT -->
+                <!-- Button stuff should go in here. -->
+                <form>
+                    <div class="form-group">
+                    <button type="button" class="btn btn-danger btn-xs" onclick="getCombatant()" style="width:100px">Get Attacker</button>
+                    </div>
+                </form>
+                </div>
+                    
+                <div class="col-sm-2">
+                <!-- GET SPECIAL ATTACK -->
+                <!-- Button stuff should go in here. -->
+                <form>
+                    <div class="form-group">
+                    <button type="button" class="btn btn-danger btn-xs" onclick="postRandArrayVal('Special Attack: ', ' combatText', specialArray)" style="width:100px">Special Attack?</button>
+                    </div>
+                </form>
+                </div>
+                    
+                <div class="col-sm-2">
+                <!-- GET COMBATANT TYPE -->
+                <!-- Button stuff should go in here. -->
+                <form>
+                    <div class="form-group">
+                    <button type="button" class="btn btn-danger btn-xs" onclick="postRandArrayVal('Type of Combatant: ', ' combatText', combatTypeArray)" style="width:100px">What Type?</button>
+                    </div>
+                </form>
+                </div>
+                    
+                <div class="col-sm-2">
+                <!-- GET AMOUNT OF ATTACKERS -->
+                <!-- Button stuff should go in here. -->
+                <form>
+                    <div class="form-group">
+                    <button type="button" class="btn btn-danger btn-xs" onclick="postRandArrayVal('Number of Attackers: ', ' combatText', combatAmountArray)" style="width:100px">How Many?</button>
+                    </div>
+                </form>
+                </div>
+                    
+                <div class="col-sm-2">
+                <!-- GET COMBATANT INTENT -->
+                <!-- Button stuff should go in here. -->
+                <form>
+                    <div class="form-group">
+                    <button type="button" class="btn btn-danger btn-xs" onclick="postRandArrayVal('Attacker Intentions: ', ' combatText', intentArray)" style="width:100px">Intentions?</button>
+                    </div>
+                </form>
+                </div>
+                    
+                <div class="col-sm-2">
+                <!-- GET COMBATANT STRATEGY -->
+                <!-- Button stuff should go in here. -->
+                <form>
+                    <div class="form-group">
+                    <button type="button" class="btn btn-danger btn-xs" onclick="postRandArrayVal('Attacker Strategy: ', ' combatText', strategyArray)" style="width:100px">Attack Strategy?</button>
+                    </div>
+                </form>
+                </div>
+            </div>
+        </div>
+        
+        <div class="container">
+            <div class="row" style="background-color:#3a4eea;">
+                <h4><span class="glyphicon glyphicon-collapse-up" id="trapIcon" onclick="collapseSection('trapSection', 'trapIcon')"></span><b>Traps</b> </h4>
+            </div>
+        </div>
+        
+        <!-- THIS IS TRAP CODE -->
+        <div class="container" style="background-image:url('images/cobweb-60.jpg');" id="trapSection">
+            <div class="row"><p></p></div>
+            
+            <div class="row">
+                <div class="col-sm-2">
+                <!-- GET THE TRAP -->
+                <!-- Button stuff should go in here. -->
+                <form>
+                    <div class="form-group">
+                    <button type="button" class="btn btn-primary btn-xs" onclick="getTrap()" style="width:100px">Get Trap</button>
+                    </div>
+                </form>
+                </div>
+                    
+                <div class="col-sm-2">
+                <!-- GET TRAP DIFFICULTY TO DISCOVER -->
+                <!-- Button stuff should go in here. -->
+                <form>
+                    <div class="form-group">
+                    <button type="button" class="btn btn-primary btn-xs" onclick="postRandArrayVal('Difficult to Discover: ', ' trapText', difficultyArray)" style="width:100px">To Discover?</button>
+                    </div>
+                </form>
+                </div>
+                    
+                <div class="col-sm-2">
+                <!-- GET TRAP DIFFICULTY TO DISARM -->
+                <!-- Button stuff should go in here. -->
+                <form>
+                    <div class="form-group">
+                    <button type="button" class="btn btn-primary btn-xs" onclick="postRandArrayVal('Difficulty to Disarm: ', ' trapText', difficultyArray)" style="width:100px">To Disarm?</button>
+                    </div>
+                </form>
+                </div>
+                    
+                <div class="col-sm-2">
+                <!-- GET TRAP DIFFICULTY TO AVOID -->
+                <!-- Button stuff should go in here. -->
+                <form>
+                    <div class="form-group">
+                    <button type="button" class="btn btn-primary btn-xs" onclick="postRandArrayVal('Difficulty to Avoid: ', ' trapText', difficultyArray)" style="width:100px">To Avoid?</button>
+                    </div>
+                </form>
+                </div>
+                    
+                <div class="col-sm-2">
+                <!-- GET TRAP DAMAGE AMOUNT -->
+                <!-- Button stuff should go in here. -->
+                <form>
+                    <div class="form-group">
+                    <button type="button" class="btn btn-primary btn-xs" onclick="postRandArrayVal('Damage Amount from Trap: ', ' trapText', difficultyArray)" style="width:100px">Trap Damage</button>
+                    </div>
+                </form>
+                </div>
+                
+                <div class="col-sm-2"></div>
+            </div>
+        </div>
+        
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12">
+                    <p>Thank you for using this website!  I hope it has been useful!</p>
+                    
+                    <p><font size=-2>(c) 2017 Eric Bright</font></p>
+                </div>
+            </div>
+        </div>
+        
+    </body>
+    </html>
